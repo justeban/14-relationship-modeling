@@ -14,18 +14,20 @@ let app = express();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+
 app.use(router);
+
 app.use(notFound);
 app.use(errorHandler);
 
-let isRunning = false;
+let server = false;
 
 module.exports = {
   start: (port) => {
-    if (!isRunning) {
-      app.listen(port, (err) => {
+    if (!server) {
+      server = app.listen(port, (err) => {
         if (err) { throw err; }
-        isRunning = true;
+        server = true;
         console.log(`Server is up and running on ${port}`);
       });
     } else {
@@ -33,8 +35,7 @@ module.exports = {
     }
   }, 
   stop: () => {
-    app.close(() => {
-      isRunning = false; 
+    server.close(() => {
       console.log('Server has been stopped');
     });
   } // eslint-disable-line

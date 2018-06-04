@@ -1,7 +1,7 @@
 'use strict';
 
 import requireAll from 'require-dir';
-const models = requireAll('../models');
+const models = requireAll(`${__dirname}/../models`);
 
 export default (req, res, next) => {
   let model = req.params.model;
@@ -9,6 +9,6 @@ export default (req, res, next) => {
     req.model = models[model].default;
     next();
   } else {
-    console.log(`${req.params.model} was not found`);
+    throw (`${req.params.model} was not found`);
   }
 };

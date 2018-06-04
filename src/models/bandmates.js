@@ -1,22 +1,22 @@
 'use strict';
 
 import mongoose from 'mongoose';
+import Bands from './bands';
 
 const bandmateSchema = mongoose.Schema({
   name: {type:String, required:true},
-  band: {type:mongoose.Schema.Types.ObjectId, ref: 'bands' },
-  instrument: {type:String, required:true} 
+  instrument: {type:String, required:true},
+  band: {type:mongoose.Schema.Types.ObjectId, required: true, ref: 'bands' },
 });
 
-bandmateSchema.pre('findOne', function (next) {
-  this.populate('bands');
+bandmateSchema.pre('findOne', function(next) {
+  this.populate('band');
   next();
 });
 
-bandmateSchema.pre('save', function (next) {
+bandmateSchema.pre('save', function(next) {
   let mateId = this._id;
   let bandId = this.band;
-
   Bands.findById(bandId)
     .then(band => {
       if (!band) {
