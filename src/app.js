@@ -27,7 +27,6 @@ module.exports = {
     if (!server) {
       server = app.listen(port, (err) => {
         if (err) { throw err; }
-        server = true;
         console.log(`Server is up and running on ${port}`);
       });
     } else {
@@ -38,5 +37,5 @@ module.exports = {
     server.close(() => {
       console.log('Server has been stopped');
     });
-  } // eslint-disable-line
+  },
 };

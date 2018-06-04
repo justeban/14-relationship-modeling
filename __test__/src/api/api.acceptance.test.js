@@ -1,12 +1,14 @@
 'use strict';
 
 require('babel-register');
+
 const superagent = require('superagent');
 const app = require('../../../src/app.js');
 
 describe('API', () => {
 
   const PORT = 8888;
+
   beforeAll(() => {
     app.start(PORT);
   });
@@ -17,7 +19,6 @@ describe('API', () => {
   it('gets a 200 response on a good model', () => {
     return superagent.get('http://localhost:8888/api/v1/bar')
       .then(response => {
-        console.log(response.statusCode);
         expect(response.statusCode).toEqual(200);
       })
       .catch(err => console.error(err));
