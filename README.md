@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.com/justeban/14-relationship-modeling.svg?branch=lab-justin)](https://travis-ci.com/justeban/14-relationship-modeling) 14: Single Resource Mongo and Express API
+ 14: Single Resource Mongo and Express API
 ===
 
-[![Build Status](https://travis-ci.com/justeban/13-object-relational-mapping.svg?branch=lab-justin)](https://travis-ci.com/justeban/13-object-relational-mapping)
+[![Build Status](https://travis-ci.com/justeban/14-relationship-modeling.svg?branch=lab-justin)](https://travis-ci.com/justeban/14-relationship-modeling)
 
 * **Git Hub Repo:** [https://github.com/justeban/14-relationship-modeling/tree/lab-justin](https://github.com/justeban/14-relationship-modeling/tree/lab-justin)
 * **Heroku App:** [https://mongo-double-resource-lab-14.herokuapp.com/](https://mongo-double-resource-lab-14.herokuapp.com/)
