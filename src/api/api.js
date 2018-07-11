@@ -3,13 +3,22 @@
 import express from 'express';
 const router = express.Router();
 
-import modelFinder from '../middleware/models.js';
-router.param('model', modelFinder);
+import {finder, list} from '../middleware/models.js';
+router.param('model', finder);
+
+router.get('/api/v1/models', (req, res, next) => {
+  sendJSON(res, list());
+});
 
 router.get('/api/v1/:model', (req, res, next) => {
   req.model.find({})
     .then(data => sendJSON(res, data))
     .catch(next);
+});
+
+router.get('/api/v1/:model/schema', (req, res, next) => {
+  let schema = (typeof req.model.jsonSchema === 'function') ? req.model.jsonSchema() : {};
+  sendJSON(res, schema);
 });
 
 router.post('/api/v1/:model', (req, res, next) => {
