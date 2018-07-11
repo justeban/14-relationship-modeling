@@ -1,37 +1,34 @@
 'use strict';
 
 import mongoose from 'mongoose';
+require('mongoose-schema-jsonschema')(mongoose);
 import Bands from './bands';
 
 const bandmateSchema = mongoose.Schema({
   name: {type:String, required:true},
   instrument: {type:String, required:true},
-  band: {type:mongoose.Schema.Types.ObjectId, required: true, ref: 'bands' },
+}, { toJSON: { virtuals: true }, 
 });
 
-bandmateSchema.pre('findOne', function(next) {
-  this.populate('band');
-  next();
+bandmateSchema.virtual('band', {
+  ref: 'bands',
+  localField: 'band',
+  foreignField: 'name',
+  justOne: false,
 });
 
-bandmateSchema.pre('save', function(next) {
-  let mateId = this._id;
-  let bandId = this.band;
-  Bands.findById(bandId)
-    .then(band => {
-      if (!band) {
-        return Promise.reject('Invalid Team Specified');
-      } else {
-        Bands.findOneAndUpdate(
-          { _id: bandId },
-          { $addToSet: { members: mateId } }
-        )
-          .then(Promise.resolve())
-          .catch(err => Promise.reject(err));
-      }
-    })
-    .then(next())
-    .catch(next);
+bandmateSchema.pre('findOne', function () {
+  try {
+    this.populate('band');
+  }
+  catch (e) {
+    console.error('ERR', e);
+  }
 });
+
+// bandmateSchema.pre('findOne', function(next) {
+//   this.populate('band');
+//   next();
+// });
 
 export default mongoose.model('bandmates', bandmateSchema);

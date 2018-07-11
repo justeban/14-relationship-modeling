@@ -7,8 +7,9 @@ import {finder, list} from '../middleware/models.js';
 router.param('model', finder);
 
 router.get('/api/v1/models', (req, res, next) => {
-  sendJSON(list());
+  sendJSON(res, list());
 });
+
 router.get('/api/v1/:model', (req, res, next) => {
   req.model.find({})
     .then(data => sendJSON(res, data))
